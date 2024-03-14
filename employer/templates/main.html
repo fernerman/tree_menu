@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employers_Info</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div class="container">
+  <h1>Всё информация о работниках</h1>
+<button type="button" class="btn btn-success" id="showFormButton">Создать работника</button>
+
+
+
+{#<button type="button" class="btn btn-success" id="showFormButton">Изменить данные работника</button>#}
+
+
+<form method="post" id="createForm" style="display: none;" action="{% url 'manage_employers' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>
+
+
+<form id="editForm" method="POST">
+    <div class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- Button to trigger the edit process -->
+        <button type="submit" class="btn btn-success btn-sm mr-2 edit-btn">Сохранить</button>
+
+    </div>
+</form>
+
+
+
+
+  <table class="table table-striped table-bordered" id="sortTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Отчество</th>
+        <th>Должность</th>
+        <th>Дата приема</th>
+        <th>Зарплата</th>
+        <th>Начальник</th>
+        <td>Действие</td>
+      </tr>
+    </thead>
+{% csrf_token %}
+<tbody id="employerTableBody">
+  {% for employer in employers %}
+    <tr data-id="{{ employer.id }}">
+      <td>{{ employer.id }}</td>
+      <td>{{ employer.f_name }}</td>
+      <td>{{ employer.m_name }}</td>
+      <td>{{ employer.l_name }}</td>
+      <td>{{ employer.position }}</td>
+      <td>{{ employer.date_employment }}</td>
+      <td>{{ employer.salary }}</td>
+      <td>{{ employer.parent }}</td>
+           <td><a href="{% url 'edit_employer' employer.id %}"><button>Изменить</button></a>
+        <a href="{% url 'delete_employer' employer.id %}"><button>Удалить</button></a></td>
+    </tr>
+  {% endfor %}
+</tbody>
+
+  </table>
+
+</div>
+
+<script>
+
+
+
+
+$(document).ready(function(){
+    var clickCount = 0;
+
+    // Show or hide form when button is clicked
+    $("#showFormButton").click(function(){
+        clickCount++;
+        if (clickCount % 2 === 1) {
+            $("#createForm").show();
+
+            $("#editForm").hide();
+
+        } else {
+            $("#editForm").show();
+
+            $("#createForm").hide();
+        }
+    });
+});
+
+</script>
+
+
+
+</body>
+</html>

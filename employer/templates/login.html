@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LK</title>
+  <!-- Bootstrap CSS (jsDelivr CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2 class="text-center text-dark mt-5">Вход в личный кабинет UserInfo</h2>
+        <div class="text-center mb-5 text-dark">Касьянов Михаил©</div>
+        <div class="card my-5">
+        <form id="login-form" class="card-body cardbody-color p-lg-5" method="post">
+
+              {% csrf_token %}
+            <div class="text-center"></div>
+            <div class="mb-3">
+              <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Логин">
+            </div>
+            <div class="mb-3">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Пароль">
+            </div>
+            <div class="text-center">
+             <button type="submit" id="login-btn" class="btn btn-color px-5 mb-5 w-100">Войти</button>
+
+
+                     <a href="{% url 'signup' %}">Создайте новый аккаунт</a>
+            </div>
+
+
+
+          </form>
+                    {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{#<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>#}
+{#<script>#}
+{#$(document).ready(function() {#}
+{#    $('#login-btn').click(function() {#}
+{#        var username = $('#username').val();#}
+{#        var password = $('#password').val();#}
+{#        var csrf_token = $('input[name="csrfmiddlewaretoken"]').val(); // Get the CSRF token#}
+{##}
+{#        $.ajax({#}
+{#            url: '{% url "login" %}',#}
+{#            type: 'POST',#}
+{#            headers: {'X-CSRFToken': csrf_token}, // Include CSRF token in headers#}
+{#            data: {#}
+{#                'username': username,#}
+{#                'password': password,#}
+{#                'csrfmiddlewaretoken': csrf_token // Include CSRF token in data#}
+{#            },#}
+{#            success: function(response) {#}
+{#                // Check if the response contains a redirect URL#}
+{#                if (response.redirect_url) {#}
+{#                    window.location.href = response.redirect_url; // Redirect to a new page#}
+{#                } else {#}
+{#                    // If no redirect URL is provided, it means there was an error#}
+{#                    $('#error-message').text(response); // Display the error message#}
+{#                }#}
+{#            },#}
+{#            error: function(xhr) {#}
+{#                // Handle other errors (e.g., server error)#}
+{#                $('#error-message').text(xhr.responseText);#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#});#}
+{##}
+{##}
+{#</script>#}
+</body>
+</html>
